@@ -1,12 +1,27 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Vehicle } from './models/vehicle.model';
+import { VehicleSearchComponent } from './components/vehicle-search/vehicle-search.component';
+import { VehicleDetailsComponent } from './components/vehicle-details/vehicle-details.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [CommonModule, VehicleSearchComponent, VehicleDetailsComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
-  title = 'vehicle-info-app';
+  activeVehicle: Vehicle | null = null;
+  isLoading = false;  // Shortened boolean initialization
+
+  // Handles vehicle selection
+  onVehicleSelected(vehicle: Vehicle | null): void {
+    this.isLoading = true;  // Simulating a loading state
+    setTimeout(() => {
+      this.activeVehicle = vehicle;
+      this.isLoading = false;
+    }, 500);  // Simulates a delay in data retrieval
+  }
 }
